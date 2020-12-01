@@ -1,2 +1,10 @@
 # atom-bot
 A chatbot named atom.
+
+
+> atom-bot v1.0a
+>> A web based implementation of [ChatterBot](https://github.com/gunthercox/ChatterBot) using Flask and no jQuery.
+# Local Setup:-
+1. Ensure that **Python**, **Flask**, **SQLAlchemy**, and **ChatterBot** are installed (either manually, or run `pip install -r requirements.txt`).
+2. Run "**app.py**" with `python app.py`.
+3. The demo will be live at `http://localhost:5000/`
