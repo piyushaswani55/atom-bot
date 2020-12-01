@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+    <h1>ChatterBot</h1>
+    <div>
+        <div id="chatbox">
+            <p class="botText"><span>Hello Human!</span></p>
+        </div>
+        <div id="userInput">
+            <input id="textInput" type="text" name="message" placeholder="Ask me anything..." autofocus />
+            <input id="submit" type="submit" value="Submit" />
+        </div>
+        <script>
+            var textInput = document.getElementById("textInput");
+            var userInput = document.getElementById("userInput");
+            var chatbox = document.getElementById("chatbox");
+            var submit = document.getElementById("submit");
+            function getBotResponse() {
+                var text = textInput.value;
+                var userHtml = '<p class="userText"><span> ' + text + '</span></p>';
+                textInput.value = "";
+                chatbox.innerHTML += userHtml;
+                userInput.scrollIntoView({ block: 'start', behavior: 'smooth' });
+
+                request = {
+                    "message": text
+                }
+                var options = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(request)
+                }
+
+                fetch("/chat", options).then(response=>{return response.text()}).then(data=>{
+                    var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+                    chatbox.innerHTML += botHtml;
+                    userInput.scrollIntoView({ block: 'start', behavior: 'smooth' });
+                });
+            }
+
+            textInput.onkeypress = (e) => {
+                if (e.which == 13 && textInput.value && textInput.value != "") {
+                    getBotResponse();
+                }
+            };
+
+            submit.onclick = () => {
+                if (textInput.value && textInput.value != "")
+                    getBotResponse();
+            };
+        </script>
+    </div>
+</body>
+
+</html>
